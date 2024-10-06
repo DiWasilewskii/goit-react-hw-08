@@ -1,16 +1,15 @@
-import css from "./SearchBox.module.css";
+import { nameFilter } from "../../redux/filters/slice.js";
 import { useDispatch } from "react-redux";
-import { nameFilter } from "../../redux/filtersSlice.js";
+import TextInput from "../TextInput/TextInput.jsx";
 
 export default function SearchBox() {
   const dispatch = useDispatch();
   return (
-    <div className={css.searchBox}>
-      <p>Search by name</p>
-      <input
+    <div>
+      <TextInput
         type="text"
+        label="Search"
         onChange={e => dispatch(nameFilter(e.target.value))}
-        className={css.searchInput}
       />
     </div>
   );

@@ -1,16 +1,14 @@
-import Contact from "../Contact/Contact.jsx";
-import css from "./ContactList.module.css";
 import { useSelector } from "react-redux";
-import { selectVisibleContacts } from "../../redux/selectors.js";
+import { selectVisibleContacts } from "../../redux/filters/selectors.js";
+import { ContactCard } from "../ContactCard/ContactCard.jsx";
 
 export default function ContactList() {
   const filteredBook = useSelector(selectVisibleContacts);
-
   return (
-    <ul className={css.contactList}>
+    <ul className="flex justify-center flex-wrap gap-4">
       {filteredBook.map(data => (
-        <li key={data.id} className={css.contact}>
-          <Contact data={data} />
+        <li key={data.id}>
+          <ContactCard data={data} />
         </li>
       ))}
     </ul>
