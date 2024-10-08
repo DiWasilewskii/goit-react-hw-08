@@ -1,35 +1,41 @@
-import { useDispatch } from "react-redux";
-import { Button } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import ContactList from "../../components/ContactList/ContactList";
+import Loader from "../../components/Loader/Loader";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import { selectContacts } from "../../redux/contacts/selectors";
+import { selectVisibleContacts } from "../../redux/filters/selectors";
 import { useEffect } from "react";
-import { AddContactDialog } from "../../components/ContactModal/ContactModal.jsx";
-import { fetchContacts } from "../../redux/contacts/operations.js";
-import SearchBox from "../../components/SearchBox/SearshBox.jsx";
-import ContactList from "../../components/ContactList/ContactList.jsx";
-import { openCloseModal } from "../../redux/modalContact/slice.js";
+import { fetchContacts } from "../../redux/contacts/operations";
+import { PiSmileyMeltingThin } from "react-icons/pi";
 
-export default function ContactsPage() {
+const ContactsPage = () => {
+  const contacts = useSelector(selectVisibleContacts);
+  const { loading, error } = useSelector(selectContacts);
   const dispatch = useDispatch();
-  const items = {
-    name: "",
-    number: "",
-    id: "",
-  };
 
-  const handleOpen = () => dispatch(openCloseModal(items));
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
+
   return (
-    <div>
-      <div>
-        <div className="flex items-center justify-center gap-6 flex-wrap">
-          <SearchBox />
-          <Button onClick={handleOpen}>Add Contact</Button>
+    <>
+      <h2 className="title">Phonebook</h2>
+      <ContactForm />
+      <SearchBox />
+      {loading && <Loader />}
+      {error && <p>Cant load contacts at the moment</p>}
+      {!loading && !error && contacts.length !== 0 ? (
+        <ContactList contacts={contacts} />
+      ) : (
+        <div className="phonebook">
+          <p>The phonebook is empty</p>
+          <PiSmileyMeltingThin />
         </div>
-        <ContactList />
-      </div>
-      <AddContactDialog />
-    </div>
+      ) }
+    </>
   );
 }
+
+export default ContactsPage;
