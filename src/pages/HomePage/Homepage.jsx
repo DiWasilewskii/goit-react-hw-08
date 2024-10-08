@@ -13,7 +13,7 @@ const HomePage = () => {
   ) : (
     <div>
       <h1 className="greet">Welcome!</h1>
-      <img className="contact" src={contactSVG} alt="Contact" />
+      {/* <img className="contact" src={contactSVG} alt="Contact" /> */}
     </div>
   );
 }
