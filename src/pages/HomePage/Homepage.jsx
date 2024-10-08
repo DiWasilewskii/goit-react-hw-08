@@ -1,4 +1,4 @@
-// import contactSVG from '../../assets/contact-calling-phone-svgrepo-com.svg'
+
 import { useSelector } from "react-redux";
 import { selectLoggedIn, selectUser } from "../../redux/auth/selectors";
 
